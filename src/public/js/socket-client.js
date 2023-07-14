@@ -6,15 +6,19 @@ const btnEnviar = document.querySelector('#btnEnviar')
 const socket = io()
 
 socket.on('connect', () => {
-  console.log('connected')
+  // console.log('connected')
   lblOffline.style.display = 'none'
   lblOnline.style.display = ''
 })
 
 socket.on('disconnect', () => {
-  console.log('disconnected')
+  // console.log('disconnected')
   lblOnline.style.display = 'none'
   lblOffline.style.display = ''
+})
+
+socket.on('send-message', (payload) => {
+  console.log(payload)
 })
 
 btnEnviar.addEventListener('click', () => {
@@ -24,5 +28,7 @@ btnEnviar.addEventListener('click', () => {
         id: '123',
         date: new Date().getTime()
     }
-    socket.emit('send-message', payload)
+    socket.emit('send-message', payload, (id) => {
+      console.log('From server', id)
+    })
 })

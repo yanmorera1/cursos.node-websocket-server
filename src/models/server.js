@@ -2,6 +2,7 @@ import express from 'express'
 import cors from 'cors'
 import { createServer } from 'http'
 import { Server as io } from 'socket.io'
+import { socketController } from '../../sockets/controller.js'
 
 export default class Server {
     constructor() {
@@ -34,17 +35,7 @@ export default class Server {
     }
 
     sockets() {
-        this.io.on('connection', (socket) => {
-            console.log('Client connected', socket.id)
-            
-            socket.on('disconnect', () => {
-                console.log('Client disconnected', socket.id)
-            })
-
-            socket.on('send-message', (payload) => {
-                console.log(payload)
-            })
-        })
+        this.io.on('connection', socketController)
     }
 
     listen() {
