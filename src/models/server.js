@@ -36,11 +36,13 @@ export default class Server {
     sockets() {
         this.io.on('connection', (socket) => {
             console.log('Client connected', socket.id)
-            // socket.on('event', (data) => {
-            //     /* … */
-            // })
+            
             socket.on('disconnect', () => {
                 console.log('Client disconnected', socket.id)
+            })
+
+            socket.on('send-message', (payload) => {
+                console.log(payload)
             })
         })
     }
